@@ -7,8 +7,7 @@ import time
 
 
 STATE_DIR = "state"
-DEFAULT_ROOTFS = "/home/aasthavastani03/containx/rootfs"
-
+DEFAULT_ROOTFS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "rootfs")
 
 def find_container_pid(host_pid):
     """
