@@ -1,3 +1,6 @@
+![ContainX Tests](https://github.com/aasthavastani03/containx/actions/workflows/ci.yml/badge.svg)
+
+# ContainX
 # ContainX
 
 A lightweight Linux container runtime built from scratch in Python.
