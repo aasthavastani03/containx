@@ -412,6 +412,7 @@ def main():
         )
 
         # Start container
+        os.makedirs(os.path.join(args.rootfs, "proc"), exist_ok=True)
         process = subprocess.Popen(
             [
                 "sudo",
