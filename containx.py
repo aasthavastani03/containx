@@ -5,9 +5,33 @@ import json
 import os
 import time
 
-
 STATE_DIR = "state"
 DEFAULT_ROOTFS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "rootfs")
+
+CGROUP_ROOT = "/sys/fs/cgroup"
+CGROUP_NAME = "containx"
+
+
+def setup_cgroup(pid):
+    cgroup_path = os.path.join(CGROUP_ROOT, CGROUP_NAME)
+
+    subprocess.run(
+        ["sudo", "mkdir", "-p", cgroup_path],
+        check=True
+    )
+
+    subprocess.run(
+        ["sudo", "sh", "-c",
+         f"echo {pid} > {cgroup_path}/cgroup.procs"],
+        check=True
+    )
+
+    subprocess.run(
+        ["sudo", "sh", "-c",
+         f'echo "50000 100000" > {cgroup_path}/cpu.max'],
+        check=True
+    )
+
 
 def find_container_pid(host_pid):
     """
