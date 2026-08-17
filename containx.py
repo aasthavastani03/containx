@@ -32,6 +32,12 @@ def setup_cgroup(pid):
         check=True
     )
 
+    subprocess.run(
+        ["sudo", "sh", "-c",
+         f"echo 268435456 > {cgroup_path}/memory.max"],
+        check=True
+    )
+
 
 def find_container_pid(host_pid):
     """
