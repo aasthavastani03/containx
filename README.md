@@ -23,30 +23,40 @@ ContainX demonstrates Linux container isolation using namespaces, chroot, /proc,
 - Remove containers
 - CLI interface
 
-## Architecture
+## How It Works
 
-ContainX uses Linux kernel features to create isolated processes:
+ContainX creates a lightweight Linux container environment using kernel isolation features:
+
+1. **Namespaces** isolate the container's processes and environment.
+2. **chroot** changes the container's filesystem root to `rootfs/`.
+3. **/proc** is mounted inside the container to provide process information.
+4. A child process is created and executed inside the isolated environment.
+5. ContainX tracks the container's PID, status, exit code, and logs in `state/`.
+
+### Architecture
 
 ```text
-ContainX CLI
-     |
-     v
-Python Runtime
-     |
-     +---- unshare
-     |      |
-     |      +---- PID namespace
-     |      +---- UTS namespace
-     |      +---- Mount namespace
-     |
-     +---- chroot
-     |      |
-     |      +---- Container root filesystem
-     |
-     +---- /proc
-     |
-     +---- Process management
-```
+Host Linux System
+       │
+       ▼
+   containx.py
+       │
+       ├── Linux Namespaces
+       │     ├── PID
+       │     ├── UTS
+       │     └── Mount
+       │
+       ├── chroot → rootfs/
+       │
+       ├── /proc
+       │
+       └── Container Process
+              │
+              ├── State
+              ├── Logs
+              └── Exit Code
+
+
 
 ## Commands
 
