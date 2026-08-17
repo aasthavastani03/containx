@@ -421,6 +421,7 @@ def main():
                 "--fork",
                 "--uts",
                 "--mount",
+                "--net",
                 "chroot",
                 args.rootfs,
                 "/bin/sh",
